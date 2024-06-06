@@ -10,6 +10,8 @@
 #include <rl_tools/rl/loop/steps/evaluation/config.h>
 #include <rl_tools/rl/loop/steps/evaluation/operations_generic.h>
 
+#include <cxxopts.hpp>
+
 namespace rlt = rl_tools;
 
 
@@ -50,9 +52,15 @@ using LOOP_STATE = typename LOOP_CONFIG::template State<LOOP_CONFIG>;
 #include <chrono>
 #include <iostream>
 
-int main(){
+int main(int argc, char* argv[]){
+    cxxopts::Options options("MyPendulum", "Pendulum RL Training");
+    options.add_options()
+        ("seed", "Seed", cxxopts::value<int>());
+    auto result = options.parse(argc, argv);
+
     DEVICE device;
-    TI seed = 1337;
+    TI seed = result["seed"].as<int>();
+    // TI seed = 1337;
     LOOP_STATE ls;
     rlt::malloc(device, ls);
     rlt::init(device, ls, seed);
