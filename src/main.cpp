@@ -53,7 +53,7 @@ struct LOOP_CORE_PARAMETERS: rlt::rl::algorithms::ppo::loop::core::DefaultParame
 using LOOP_CORE_CONFIG = rlt::rl::algorithms::ppo::loop::core::Config<T, TI, RNG, ENVIRONMENT, LOOP_CORE_PARAMETERS>;
 template <typename NEXT>
 struct LOOP_EVAL_PARAMETERS: rlt::rl::loop::steps::evaluation::Parameters<T, TI, NEXT>{
-    static constexpr TI EVALUATION_INTERVAL = 1;
+    static constexpr TI EVALUATION_INTERVAL = NEXT::CORE_PARAMETERS::STEP_LIMIT;
     static constexpr TI NUM_EVALUATION_EPISODES = 10;
     static constexpr TI N_EVALUATIONS = NEXT::CORE_PARAMETERS::STEP_LIMIT / EVALUATION_INTERVAL + 1;
     static constexpr TI EPISODE_STEP_LIMIT = static_cast<TI>(HYPERPARAM_EPISODE_STEP_LIMIT);
